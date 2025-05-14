@@ -23,10 +23,7 @@ public:
 
 //member functions
 //constructors
-    Vector(){
-        data = NULL;
-        size = 0;
-    }
+    Vector() : size(0), capacity(1) { data = new T[capacity]};
 
     Vector(T array[], int n){
         data = new T[n]; //reserves the same space as the array passed
@@ -36,16 +33,43 @@ public:
         size = n;
     }
 
-    ~Vector();
-
-    void push_back(const T& item){
-
+    Vector(const Vector& other): size(other.size), capacity(other.capacity){
+        data = new T[capacity];
+        for(size_t i=0; i<size; i++) {
+            data[i] = other.data[i];
+        }
     }
 
-    void size(){
+    Vector& operator=(const Vector& other){
+        if(this == &other) return *this;
 
+        size = other.size;
+        capacity = other.capacity;
+        data = new T[capacity];
+        for(size_t i = 0; i < size; ++i) {
+            data[i] = other.data[i];
+        }
+
+        return *this;
     }
 
+    Vector(Vector&& other) noexcept;
+    Vector& operator=(Vector&& other);
+
+    void push_back(const T& item);
+    void pop_back();
+
+    size_type size() const;
+    size_type capacity() const;
+
+    T& operator[](size_type index);
+
+    
+    ~Vector(){
+        size = 0;
+        capacity = 0;
+        delete[] data;
+    }
 };
 
 //non-member functions
