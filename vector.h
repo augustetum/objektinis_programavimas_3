@@ -152,6 +152,24 @@ public:
     }
 
 //iterators
+    T* begin(){
+        return data;
+    }
+
+    const T* begin() const {
+        return data;
+    }
+
+    T* end(){
+        return data + size;
+    }
+
+    const T* end() const{
+        return data + size;
+    }
+
+//capacity
+
 
 
 
