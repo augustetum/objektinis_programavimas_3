@@ -4,8 +4,10 @@ template <typename T, typename Allocator = std::allocator<T>>
 
 class Vector{
 private:
-  int sz;        
-  double *elem;  
+  size_t size;    
+  size_t capacity;    
+  T* data;
+
 public:
     using value_type = T;
     using allocator_type = Allocator;
@@ -16,30 +18,42 @@ public:
     using const_pointer = Allocator::const_pointer;
     using iterator = pointer;
     using const_iterator = const_pointer;
+    using reverse_iterator = std::reverse_iterator<iterator>
+    using const_reverse_iterator = std::reverse_iterator<const_iterator>
 
 //member functions
-//constructor
-    Vector();
+//constructors
+    Vector(){
+        data = NULL;
+        size = 0;
+    }
 
-    Vector(int s);
+    Vector(T array[], int n){
+        data = new T[n]; //reserves the same space as the array passed
+        for(int i = 0; i < n; i++){
+            data[i] = array[i];
+        }
+        size = n;
+    }
 
-    Vector(int s, double val);
-
-//destructor
     ~Vector();
 
-    Vector& operator=( const Vector& other );
+    void push_back(const T& item){
 
-    void assign(size_type count, const T& value);
+    }
 
-    template <typename InputIt>
-    void assign(InputIt first, InputIt last);
+    void size(){
 
-    void assign(std::initializer_list<T> ilist);
-
-    template< container-compatible-range<T> R >
-    constexpr void assign_range( R&& rg );
-
-    allocator_type get_allocator() const;
+    }
 
 };
+
+//non-member functions
+template <typename T>
+bool operator==(const Vector<T>& lhs, const Vector<T>& rhs ){}
+template <typename T>
+bool operator!=(const Vector<T>& lhs, const Vector<T>& rhs ){}
+template <typename T>
+bool operator>(const Vector<T>& lhs, const Vector<T>& rhs ){}
+template <typename T>
+bool operator<(const Vector<T>& lhs, const Vector<T>& rhs ){}
