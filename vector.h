@@ -53,22 +53,52 @@ public:
         return *this;
     }
 
-    Vector(Vector&& other) noexcept;
-    Vector& operator=(Vector&& other);
+    Vector(Vector&& other) noexcept : data(other.data), size(other.size), 
+    capacity(other.capacity) {
+        other.clear();
+    }
 
-    void push_back(const T& item);
+    Vector& operator=(Vector&& other){
+        if(this == &other) return *this;
+        delete[] data;
+        data = other.data;
+        size = other.size;
+        capacity = other.capacity;
+
+        other.clear();
+
+        return *this;
+    }
+
+    void clear(){
+        size = 0;
+        capacity = 0;
+        delete[] data;
+    }
+
+    void resize(){
+        capacity *= 2;
+        T* new_data = new T[capacity];
+        for(size_t i=0; i<size; i++){
+            new_data[i] = data[i];
+        }
+        delete[] data;
+        data = new_data;
+    }
+
+    void push_back(const T& item){
+        
+    }
     void pop_back();
 
-    size_type size() const;
-    size_type capacity() const;
+    size_type size() const{ return size; }
+    size_type capacity() const{return capacity; }
 
     T& operator[](size_type index);
 
     
     ~Vector(){
-        size = 0;
-        capacity = 0;
-        delete[] data;
+       clear();
     }
 };
 
