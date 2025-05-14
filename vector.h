@@ -87,15 +87,29 @@ public:
     }
 
     void push_back(const T& item){
-        
+        if(size == capacity) {
+            resize();
+        }
+        data[size] = item;
+        ++size;
     }
-    void pop_back();
+
+    void pop_back(){
+        if(size > 0){
+            --size;
+        }
+    }
+
+    T& operator[](size_t index){
+        if (index >= size){
+            throw std::out_of_range("Index out of bounds");
+        }
+        return data[index];
+    }
 
     size_type size() const{ return size; }
+    
     size_type capacity() const{return capacity; }
-
-    T& operator[](size_type index);
-
     
     ~Vector(){
        clear();
