@@ -30,3 +30,10 @@
 *.exe
 *.out
 *.app
+
+programa.dSYM
+strategija2.dSYM
+nepazangus.txt
+pazangus.txt
+studentuRezultatai.txt
+gen_failu_archyvas
