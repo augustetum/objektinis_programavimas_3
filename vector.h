@@ -100,6 +100,26 @@ public:
         }
     }
 
+    size_type size() const{ return size; }
+
+    size_type capacity() const{return capacity; }
+    
+    ~Vector(){
+       clear();
+    }
+
+    bool empty(){
+        return size == 0;
+    }
+
+    //element access
+    T& at(int pos){
+        if(pos >= size){
+            throw std::out_of_range("Index out of bounds");
+        }
+        return data[pos];
+    }
+
     T& operator[](size_t index){
         if (index >= size){
             throw std::out_of_range("Index out of bounds");
@@ -107,13 +127,34 @@ public:
         return data[index];
     }
 
-    size_type size() const{ return size; }
-    
-    size_type capacity() const{return capacity; }
-    
-    ~Vector(){
-       clear();
+    T& front(){
+        return at(0);
     }
+
+    T& back(){
+        return at(size-1);
+    }
+
+    const T& front() const{
+        return at(0);
+    }
+
+    const T& back() const{
+        return at(size-1);
+    }
+
+    T* data(){
+        return data;
+    }
+
+    const T* data() const {
+        return data;
+    }
+
+//iterators
+
+
+
 };
 
 //non-member functions
