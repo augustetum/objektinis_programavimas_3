@@ -99,17 +99,9 @@ public:
             --size;
         }
     }
-
-    size_type size() const{ return size; }
-
-    size_type capacity() const{return capacity; }
     
     ~Vector(){
        clear();
-    }
-
-    bool empty(){
-        return size == 0;
     }
 
     //element access
@@ -169,8 +161,29 @@ public:
     }
 
 //capacity
+    bool empty(){
+        return size == 0;
+    }
 
+    size_type size() const{ return size; }
 
+    size_type max_size() const{
+        return std::numeric_limits<size_type>::max() / sizeof(T);
+    }
+
+    void reserve(size_type new_cap ){
+        if (new_cap > capacity){
+            capacity = new_cap;
+        }
+    }
+
+    size_type capacity() const{return capacity; }
+
+    void shrink_to_fit(){
+        capacity = size;
+    }
+
+//modifiers
 
 
 };
