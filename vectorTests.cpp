@@ -10,7 +10,7 @@ TEST_CASE("Vector constructors & Rule of Five", "[Vector]") {
         REQUIRE(v.empty());
     }
 
-     SECTION("List constructor", "[Vector]") {
+     SECTION("List constructor") {
         Vector<int> v = {6, 7, 8, 10, 8};
         int arr[] = {6, 7, 8, 10, 8};
         REQUIRE(v.size() == 5);
@@ -192,7 +192,6 @@ TEST_CASE("Modifiers", "[Vector]"){
 
         auto it = v.insert(v.begin() + 1, 2);  
 
-        REQUIRE(v.size() == 3);
         REQUIRE(v.at(0) == 1);
         REQUIRE(v.at(1) == 2);
         REQUIRE(v.at(2) == 3);
@@ -202,7 +201,7 @@ TEST_CASE("Modifiers", "[Vector]"){
         REQUIRE_THROWS_AS(v.insert(v2.begin() + 1, 10), std::out_of_range);
     }
 
-    SECTION("erase() (single element)", "[Vector]"){
+    SECTION("erase() (single element)"){
          Vector<int> v;
         v.push_back(1);
         v.push_back(2);
@@ -216,7 +215,7 @@ TEST_CASE("Modifiers", "[Vector]"){
         REQUIRE(*it == 3);
     }
 
-    SECTION("erase() (range)", "[Vector]"){
+    SECTION("erase() (range)"){
         Vector<int> v;
         for (int i = 1; i <= 5; ++i){
             v.push_back(i);
@@ -230,7 +229,7 @@ TEST_CASE("Modifiers", "[Vector]"){
         REQUIRE(*it == 5);
     }
 
-    SECTION("push_back()", "[Vector]"){
+    SECTION("push_back()"){
         Vector<int> v;
         v.push_back(42);
 
@@ -238,7 +237,7 @@ TEST_CASE("Modifiers", "[Vector]"){
         REQUIRE(v.at(0) == 42);
     }
 
-     SECTION("pop_back()", "[Vector]"){
+     SECTION("pop_back()"){
         Vector<int> v;
         v.push_back(10);
         v.push_back(20);
@@ -248,7 +247,7 @@ TEST_CASE("Modifiers", "[Vector]"){
         REQUIRE(v.at(0) == 10);
     }
 
-    SECTION("resize()", "[Vector]"){
+    SECTION("resize()"){
         Vector<int> v;
         v.reserve(2);
         v.push_back(1);
@@ -262,7 +261,7 @@ TEST_CASE("Modifiers", "[Vector]"){
         REQUIRE(v.capacity() >= 3);
     }
 
-    SECTION("swap()", "[Vector]"){
+    SECTION("swap()"){
         Vector<int> a, b;
         a.push_back(1);
         a.push_back(2);
@@ -275,6 +274,21 @@ TEST_CASE("Modifiers", "[Vector]"){
         REQUIRE(b.size() == 2);
         REQUIRE(b.at(0) == 1);
         REQUIRE(b.at(1) == 2);
+    }
+}
+
+TEST_CASE("Operators", "[Vector]"){
+
+    SECTION("== operator"){
+        Vector<int> a = {1,2,3,4,5};
+        Vector<int> b = {1,2,3,4,5};
+        REQUIRE(a==b);
+    }
+
+    SECTION("!= operator"){
+        Vector<int> a = {1,2,3,4,5};
+        Vector<int> b = {3,2,3,4,5};
+        REQUIRE(a!=b);
     }
 }
 

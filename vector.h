@@ -213,6 +213,7 @@ public:
         if(size_ == capacity_){
             resize();
         } 
+        size_++;
         for(size_t i = size_-1; i > index; --i){
             data_[i]=data_[i-1];
         }
@@ -227,7 +228,7 @@ public:
             throw std::out_of_range("Invalid position");
         }
     
-        size_t index = std::distance(begin(), pos);
+        size_t index = std::distance(static_cast<const T*>(begin()), pos);
     
         for(size_t i = index; i < size_ - 1; i++) {
             data_[i] = data_[i+1];
@@ -238,8 +239,8 @@ public:
     }   
     
     iterator erase(const_iterator first, const_iterator last ){
-        size_t pos_first = std::distance(begin(), first);
-        size_t pos_last = std::distance(begin(), last);
+        size_t pos_first = std::distance(static_cast<const T*>(begin()), first);
+        size_t pos_last = std::distance(static_cast<const T*>(begin()), last);
         size_t count = pos_last - pos_first;
     
         if (count == 0) {
@@ -264,7 +265,7 @@ public:
     }
 
     void append_range(){
-        
+
     }
 
     void pop_back(){
