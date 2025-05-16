@@ -96,6 +96,24 @@ public:
        clear();
     }
 
+    void assign(size_type count, const T& value) {
+        clear();
+        if (count > capacity_) {
+            delete[] data_;
+            capacity_ = count;
+            data_ = new T[capacity_];
+        } else {
+            if (data_ == nullptr) {
+                data_ = new T[capacity_];
+            }
+        }
+        
+        for (size_type i = 0; i < count; ++i) {
+            data_[i] = value;
+        }
+        size_ = count;
+    }
+
     //element access
     T& at(int pos){
         if(pos >= size_){

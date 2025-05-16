@@ -30,8 +30,8 @@ $(EXEC4): programaFunkcijos.o programa.o
 $(TEST_EXEC): catchTests.o programaFunkcijos.o 
 	$(CXX) $(CXXFLAGS) -o $(TEST_EXEC) catchTests.o programaFunkcijos.o -L/opt/homebrew/Cellar/catch2/3.8.1/lib -lCatch2Main -lCatch2
 
-$(TEST_VECT): vectorTests.o 
-	$(CXX) $(CXXFLAGS) -o $(TEST_VECT) vectorTests.o -L/opt/homebrew/Cellar/catch2/3.8.1/lib -lCatch2Main -lCatch2
+$(TEST_VECT): vectorUnitTests.o 
+	$(CXX) $(CXXFLAGS) -o $(TEST_VECT) vectorUnitTests.o -L/opt/homebrew/Cellar/catch2/3.8.1/lib -lCatch2Main -lCatch2
 
 konteineriuTyrimas.o: 1_strategija/konteineriuTyrimas.cpp
 	$(CXX) $(CXXFLAGS) -c 1_strategija/konteineriuTyrimas.cpp -o konteineriuTyrimas.o
@@ -51,8 +51,8 @@ programa.o: programa.cpp
 catchTests.o: catchTests.cpp studentClass.h
 	$(CXX) $(CXXFLAGS) -I$(CATCH_PATH) -c catchTests.cpp -o catchTests.o
 
-vectorTests.o: vectorTests.cpp Vector.h
-	$(CXX) $(CXXFLAGS) -I$(CATCH_PATH) -c vectorTests.cpp -o vectorTests.o
+vectorUnitTests.o: vectorUnitTests.cpp Vector.h
+	$(CXX) $(CXXFLAGS) -I$(CATCH_PATH) -c vectorUnitTests.cpp -o vectorUnitTests.o
 
 clean:
 	rm -f *.o $(EXEC0) $(EXEC1) $(EXEC2) $(EXEC3) $(EXEC4) $(TEST_EXEC) $(TEST_VECT)
