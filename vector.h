@@ -22,8 +22,10 @@ public:
 
 //member functions
 //constructors
+    //default constructor
     Vector() : size_(0), capacity_(1) { data_ = new T[capacity_];}
 
+    //array constructor
     Vector(T array[], int n){
         data_ = new T[n]; //reserves the same space as the array passed
         for(int i = 0; i < n; i++){
@@ -32,6 +34,20 @@ public:
         size_ = n;
     }
 
+    //list constructor
+    Vector(std::initializer_list<T> init) {
+        size_ = init.size();
+        capacity_ = size_;
+        data_ = new T[capacity_];
+
+        size_t i = 0;
+        for (const T& value : init) {
+            data_[i] = value;
+            i++;
+        }
+    }
+
+    //copy constructor
     Vector(const Vector& other): size_(other.size_), capacity_(other.capacity_){
         data_ = new T[capacity_];
         for(size_t i=0; i<size_; i++) {
@@ -39,6 +55,7 @@ public:
         }
     }
 
+    //copy assignment operator
     Vector& operator=(const Vector& other){
         if(this == &other) return *this;
 
@@ -52,19 +69,25 @@ public:
         return *this;
     }
 
-    Vector(Vector&& other) noexcept : data_(other.data_), size_(other.size_), 
-    capacity_(other.capacity_) {
-        other.clear();
+    //move constructor
+    Vector(Vector&& other) noexcept 
+    : data_(other.data_), size_(other.size_), capacity_(other.capacity_) {
+        other.data_ = nullptr; 
+        other.size_ = 0;
+        other.capacity_ = 0;
     }
 
-    Vector& operator=(Vector&& other){
+    //move assignment operator
+    Vector& operator=(Vector&& other) noexcept{
         if(this == &other) return *this;
         delete[] data_;
         data_ = other.data_;
         size_ = other.size_;
         capacity_ = other.capacity_;
 
-        other.clear();
+        other.data_ = nullptr;
+        other.size_ = 0;
+        other.capacity_ = 0;
 
         return *this;
     }
@@ -76,6 +99,13 @@ public:
     //element access
     T& at(int pos){
         if(pos >= size_){
+            throw std::out_of_range("Index out of bounds");
+        }
+        return data_[pos];
+    }
+
+    const T& at(int pos) const {
+        if (pos >= size_) {
             throw std::out_of_range("Index out of bounds");
         }
         return data_[pos];
@@ -157,6 +187,7 @@ public:
         size_ = 0;
         capacity_ = 0;
         delete[] data_;
+        data_ = nullptr;
     }
 
     iterator insert(iterator pos, const T& value){
