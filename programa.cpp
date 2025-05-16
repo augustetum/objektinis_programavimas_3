@@ -4,7 +4,7 @@ int main(){
     bool veikimas = true;
     while(veikimas){
         try{
-            vector<Studentas> studentuSarasas;
+            Vector<Studentas> studentuSarasas;
             int menuChoice;
             
             cout << "Pasirinkite programos eigą:" << endl;
@@ -267,7 +267,7 @@ int main(){
                     cout << "Vardas: " << s2.vardas() << ", pavardė: " << s2.pavarde() << endl;
                     cout << endl;
                     cout << "—— Pilnas konstruktorius ——" << endl;
-                    vector<int> pazymiai = {8, 9, 10, 7, 8};
+                    Vector<int> pazymiai = {8, 9, 10, 7, 8};
                     Studentas s3("Petras", "Petraitis", pazymiai, 9);
                     cout << "Vardas: " << s3.vardas() 
                     << ", pavardė: " << s3.pavarde() 

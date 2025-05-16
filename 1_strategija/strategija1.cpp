@@ -5,7 +5,7 @@
 int main(){
     cout << "Konteinerių testavimo programa | 1 strategija" << endl;
     cout << "---------------------------------------------" << endl;
-    vector<Studentas> studentaiV;
+    Vector<Studentas> studentaiV;
     deque<Studentas> studentaiD;
     list<Studentas> studentaiL;
 
@@ -45,7 +45,6 @@ int main(){
         } 
         skirstytiStudentusSuTaisPaciaisKonteineriaisT(studentaiV);
         vektoriuTrukme += v.elapsed();
-        studentaiV.clear();
 
         d.reset();
         nuskaitytiFailaT(failas, studentaiD);
@@ -60,7 +59,6 @@ int main(){
         } 
         skirstytiStudentusSuTaisPaciaisKonteineriaisT(studentaiD);
         dequeTrukme += d.elapsed();
-        studentaiD.clear();
 
         l.reset();
         nuskaitytiFailaT(failas, studentaiL);
@@ -75,7 +73,6 @@ int main(){
         } 
         skirstytiStudentusSuTaisPaciaisKonteineriaisT(studentaiL);
         listTrukme += l.elapsed();
-        studentaiL.clear();
 
     }
 

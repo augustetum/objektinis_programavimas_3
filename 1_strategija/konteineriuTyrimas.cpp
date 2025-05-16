@@ -2,7 +2,7 @@
 #include "strategijos_bibl.h"
 
 int main(){
-    vector<Studentas> studentuSarasasV;
+    Vector<Studentas> studentuSarasasV;
     deque<Studentas> studentuSarasasD;
     list<Studentas> studentuSarasasL;
 

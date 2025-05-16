@@ -2,7 +2,7 @@
 //visų programos funkcijų realizacijos
 
 void Studentas::skaiciuotiGalutiniSuVid(){
-    vector<int> pazCopy = pazymiai_; 
+    Vector<int> pazCopy = pazymiai_; 
     double pazymiuVidurkis;
     if(pazymiai().size() == 0){
         pazymiuVidurkis = 0.0;
@@ -15,13 +15,13 @@ void Studentas::skaiciuotiGalutiniSuVid(){
 }
 
 void Studentas::skaiciuotiGalutiniSuMed(){
-    vector<int> pazCopy = pazymiai_; 
+    Vector<int> pazCopy = pazymiai_; 
     int n = pazCopy.size();
     int med;
  if (n == 0) {
         med = 0;
     } else { 
-        sort(pazCopy.begin(), pazCopy.end());
+        std::sort(pazCopy.begin(), pazCopy.end());
         if (n % 2 != 0) {
             med = pazCopy[n/2];
         } else {
@@ -33,7 +33,7 @@ void Studentas::skaiciuotiGalutiniSuMed(){
     setGalutinisM(galutinis);
 }
 
-void rodytiRezultatus(vector<Studentas> studentuSarasas){
+void rodytiRezultatus(Vector<Studentas> studentuSarasas){
     int choice;
     cout << "Jei norėtumete galutinį balą skaičiuoti su vidurkiu, įrašykite 0, jei su mediana - įrašykite 1" << endl;
     cin >> choice;
@@ -60,7 +60,7 @@ void rodytiRezultatus(vector<Studentas> studentuSarasas){
         }
 }
 
-void rodytiVisusRezultatus(vector<Studentas> studentuSarasas){
+void rodytiVisusRezultatus(Vector<Studentas> studentuSarasas){
     std::ostringstream buferis;
     buferis << std::left << std::setw(20) << "Pavardė" << std::setw(20) << "Vardas" << std::setw(20) << std::fixed << std::setprecision(2) << "Galutinis (Vid.)" << std::setw(20) << std::fixed << std::setprecision(2) << "Galutinis (Med.)" << endl;
     for (Studentas s: studentuSarasas){
@@ -85,11 +85,11 @@ void rodytiVisusRezultatus(vector<Studentas> studentuSarasas){
 
 }
 
-void generuotiPazymius(vector<Studentas> &studentuSarasas){
+void generuotiPazymius(Vector<Studentas> &studentuSarasas){
     srand(time(NULL));
     for (Studentas &s : studentuSarasas){
         int pazymiuKiekis = 3 + (rand() % 18);
-        vector<int> pazymiai;
+        Vector<int> pazymiai;
         for (int x = 0; x < pazymiuKiekis; x++){
             int pazymys = 1 + (rand() % 10);
             pazymiai.push_back(pazymys);
@@ -102,11 +102,11 @@ void generuotiPazymius(vector<Studentas> &studentuSarasas){
     }
 }
 
-void generuotiStudentus(vector<Studentas> &studentuSarasas){
+void generuotiStudentus(Vector<Studentas> &studentuSarasas){
     srand(time(NULL));
 
-    vector<string> vardai;
-    vector<string> pavardes;
+    Vector<string> vardai;
+    Vector<string> pavardes;
     string name;
 
     ifstream varduFailas("firstNames.txt");
@@ -152,7 +152,7 @@ void generuotiFailus(int studentuSkaicius){
     for(int i = 1; i <= studentuSkaicius; i++){
         string vardas = "Vardas" + std::to_string(i);
         string pavarde = "Pavarde" + std::to_string(i);
-        vector<int> pazymiai;
+        Vector<int> pazymiai;
         for (int x = 0; x < pazymiuKiekis; x++){
             int pazymys = 1 + (rand() % 10);
             pazymiai.push_back(pazymys);
@@ -179,7 +179,7 @@ string pasirinktiFaila(){
         try{
             system("ls *.txt gen_failu_archyvas/*.txt > temp.txt");
             ifstream tempFail("temp.txt");
-            vector<string> failuPav;
+            Vector<string> failuPav;
             std::unordered_set<string> nenorimiFailai = {"studentuRezultatai.txt", "firstNames.txt", "lastNames.txt", "nepazangus.txt", "pazangus.txt"};
             string failoPav;
             while(getline(tempFail, failoPav)){
@@ -216,7 +216,7 @@ string pasirinktiFaila(){
     }
 }
 
-void nuskaitytiFaila(string fail, vector<Studentas> &studentuSarasas){
+void nuskaitytiFaila(string fail, Vector<Studentas> &studentuSarasas){
     string eilut;
     int pazymys;
     std::stringstream buferis;
@@ -238,32 +238,32 @@ void nuskaitytiFaila(string fail, vector<Studentas> &studentuSarasas){
             }
 }
 //rikiavimo funkcijos
-void rikiuotiPagalVarda(vector<Studentas> &studentuSarasas){
-    sort(studentuSarasas.begin(), studentuSarasas.end(), [](const Studentas& a, const Studentas& b) {
+void rikiuotiPagalVarda(Vector<Studentas> &studentuSarasas){
+    std::sort(studentuSarasas.begin(), studentuSarasas.end(), [](const Studentas& a, const Studentas& b) {
         return a.vardas() < b.vardas();
     });
 }
 
-void rikiuotiPagalPavarde(vector<Studentas> &studentuSarasas){
-    sort(studentuSarasas.begin(), studentuSarasas.end(), [](const Studentas& a, const Studentas& b) {
+void rikiuotiPagalPavarde(Vector<Studentas> &studentuSarasas){
+    std::sort(studentuSarasas.begin(), studentuSarasas.end(), [](const Studentas& a, const Studentas& b) {
         return a.pavarde() < b.pavarde();
     });
 }
 
-void rikiuotiPagalGalutiniMed(vector<Studentas> &studentuSarasas){
-    sort(studentuSarasas.begin(), studentuSarasas.end(), [](const Studentas& a, const Studentas& b) {
+void rikiuotiPagalGalutiniMed(Vector<Studentas> &studentuSarasas){
+    std::sort(studentuSarasas.begin(), studentuSarasas.end(), [](const Studentas& a, const Studentas& b) {
         return a.galutinisMed() < b.galutinisMed();
     });
 }
 
-void rikiuotiPagalGalutiniVid(vector<Studentas> &studentuSarasas){
-    sort(studentuSarasas.begin(), studentuSarasas.end(), [](const Studentas& a, const Studentas& b) {
+void rikiuotiPagalGalutiniVid(Vector<Studentas> &studentuSarasas){
+    std::sort(studentuSarasas.begin(), studentuSarasas.end(), [](const Studentas& a, const Studentas& b) {
         return a.galutinisVid() < b.galutinisVid();
     });
 }
 
 //failų nuskaitymo testavimas
-void testuotiFailuNuskaityma(vector<Studentas> studentuSarasas, int kartai){
+void testuotiFailuNuskaityma(Vector<Studentas> studentuSarasas, int kartai){
     string eilut;
     int pazymys;
     double duration;
@@ -272,7 +272,7 @@ void testuotiFailuNuskaityma(vector<Studentas> studentuSarasas, int kartai){
         try{
             system("ls *.txt > temp.txt");
             ifstream tempFail("temp.txt");
-            vector<string> failuPav;
+            Vector<string> failuPav;
             std::unordered_set<string> nenorimiFailai = {"studentuRezultatai.txt", "firstNames.txt", "lastNames.txt"};
             string failoPav;
             while(getline(tempFail, failoPav)){
@@ -318,7 +318,7 @@ void testuotiFailuNuskaityma(vector<Studentas> studentuSarasas, int kartai){
             while(getline(buferis, eilut)){
                 istringstream eilute(eilut);
                 string vardas, pavarde;
-                vector<int> pazymiai;
+                Vector<int> pazymiai;
                 int egzaminas;
 
                 eilute >> vardas >> pavarde;
@@ -378,10 +378,10 @@ bool vardoTikrinimas(const string &vard){
 }
 
 //studentų skirstymas
-void skirstytiStudentus(vector<Studentas> &studentuSarasas){
+void skirstytiStudentus(Vector<Studentas> &studentuSarasas){
     Timer t;
-    vector<Studentas> nepazangus;
-    vector<Studentas> pazangus;
+    Vector<Studentas> nepazangus;
+    Vector<Studentas> pazangus;
     for(Studentas s : studentuSarasas){
         if (s.galutinisVid() < 5){
             nepazangus.push_back(s);
@@ -398,7 +398,7 @@ void skirstytiStudentus(vector<Studentas> &studentuSarasas){
 }
 
 //failų išvedimas
-void isvestiDuFailus(vector<Studentas> grupe1, vector<Studentas> grupe2){
+void isvestiDuFailus(Vector<Studentas> grupe1, Vector<Studentas> grupe2){
     Timer v;
     std::ostringstream buferis;
     buferis << std::left << std::setw(20) << "Pavardė" << std::setw(20) << "Vardas" << std::setw(20) << std::fixed << std::setprecision(2) << "Galutinis (Vid.)" << std::setw(20) << std::fixed << std::setprecision(2) << "Galutinis (Med.)" << endl;
@@ -428,7 +428,7 @@ void isvestiDuFailus(vector<Studentas> grupe1, vector<Studentas> grupe2){
 //input operatorius
 std::istream& operator>>(std::istream& cin, Studentas& s){
             string vardas, pavarde;
-            vector<int> pazymiai;
+            Vector<int> pazymiai;
             int egzaminas, pazymys;
 
             cin >> vardas >> pavarde;

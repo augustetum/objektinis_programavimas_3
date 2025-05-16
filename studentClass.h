@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <iomanip>
-#include <vector>
 #include <fstream>
 #include <string>
 #include <numeric>
@@ -15,11 +14,11 @@
 #include <ios>
 #include "timer.h"
 #include "humanClass.h"
+#include "vector.h"
 
 using std::cout;
 using std::cin;
 using std::string;
-using std::vector;
 using std::endl;
 using std::accumulate;
 using std::ifstream;
@@ -31,10 +30,10 @@ class Studentas : public Zmogus {
         double galutinisMed_;
         double galutinisVid_;
         double pazymiuVidurkis_;
-        vector<int> pazymiai_;
+        Vector<int> pazymiai_;
     
     public:
-        Studentas(string var, string pav, vector<int> paz, int egz) :  
+        Studentas(string var, string pav, Vector<int> paz, int egz) :  
         Zmogus(var, pav), pazymiai_{paz}, egzaminas_{egz} {
             skaiciuotiGalutiniSuMed();
             skaiciuotiGalutiniSuVid();
@@ -67,14 +66,14 @@ class Studentas : public Zmogus {
         //get'eriai
         inline double galutinisMed() const { return galutinisMed_;}
         inline double galutinisVid() const { return galutinisVid_;}
-        inline const vector<int>& pazymiai() const { return pazymiai_; }
+        inline const Vector<int>& pazymiai() const { return pazymiai_; }
         inline int egzaminas() const { return egzaminas_; }
 
         //set'eriai
         inline void setGalutinisV(double galutVid) { galutinisVid_ = galutVid; }
         inline void setGalutinisM(double galutMed) { galutinisMed_ = galutMed; }
         inline void setEgzaminas(int egz) {egzaminas_ = egz; }
-        inline void setPazymiai(vector<int> paz) {pazymiai_ = paz;}
+        inline void setPazymiai(Vector<int> paz) {pazymiai_ = paz;}
 
         //member funkcijos
         void skaiciuotiGalutiniSuVid();
@@ -163,27 +162,27 @@ class Studentas : public Zmogus {
 bool comparePagalPavarde(const Studentas&, const Studentas&);
 bool comparePagalEgza(const Studentas&, const Studentas&);
 
-void rodytiRezultatus(vector<Studentas> studentuSarasas);
-void generuotiPazymius(vector<Studentas> &studentuSarasas);
-void generuotiStudentus(vector<Studentas> &studentuSarasas);
+void rodytiRezultatus(Vector<Studentas> studentuSarasas);
+void generuotiPazymius(Vector<Studentas> &studentuSarasas);
+void generuotiStudentus(Vector<Studentas> &studentuSarasas);
 void generuotiFailus(int studentuSkaicius);
 string pasirinktiFaila();
-void nuskaitytiFaila(string fail, vector<Studentas> &studentuSarasas);
-void rodytiVisusRezultatus(vector<Studentas> studentuSarasas);
-void testuotiFailuNuskaityma(vector<Studentas> studentuSarasas, int kartai);
+void nuskaitytiFaila(string fail, Vector<Studentas> &studentuSarasas);
+void rodytiVisusRezultatus(Vector<Studentas> studentuSarasas);
+void testuotiFailuNuskaityma(Vector<Studentas> studentuSarasas, int kartai);
 
 //rikiavimo funkcijos
-void rikiuotiPagalVarda(vector<Studentas> &studentuSarasas);
-void rikiuotiPagalPavarde(vector<Studentas> &studentuSarasas);
-void rikiuotiPagalGalutiniMed(vector<Studentas> &studentuSarasas);
-void rikiuotiPagalGalutiniVid(vector<Studentas> &studentuSarasas);
+void rikiuotiPagalVarda(Vector<Studentas> &studentuSarasas);
+void rikiuotiPagalPavarde(Vector<Studentas> &studentuSarasas);
+void rikiuotiPagalGalutiniMed(Vector<Studentas> &studentuSarasas);
+void rikiuotiPagalGalutiniVid(Vector<Studentas> &studentuSarasas);
 
-void pasirinktiRikiavima(vector<Studentas> studentuSarasas);
-void skirstytiStudentus(vector<Studentas> &studentuSarasas);
+void pasirinktiRikiavima(Vector<Studentas> studentuSarasas);
+void skirstytiStudentus(Vector<Studentas> &studentuSarasas);
 
 bool vardoTikrinimas(const string &vard);
-void isvestiDuFailus(vector<Studentas> grupe1, vector<Studentas> grupe2);
-void rikiavimasIrIrasymasVargsiukamsIrKietekams(vector<Studentas> vargsiukai, vector<Studentas> kietekai);
+void isvestiDuFailus(Vector<Studentas> grupe1, Vector<Studentas> grupe2);
+void rikiavimasIrIrasymasVargsiukamsIrKietekams(Vector<Studentas> vargsiukai, Vector<Studentas> kietekai);
 void testuotiDestruktoriu();
 
 #endif

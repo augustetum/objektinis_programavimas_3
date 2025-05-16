@@ -5,7 +5,7 @@
 int main(){
     cout << "Konteinerių testavimo programa | 3 strategija" << endl;
     cout << "---------------------------------------------" << endl;
-    vector<Studentas> studentaiV;
+    Vector<Studentas> studentaiV;
     deque<Studentas> studentaiD;
     list<Studentas> studentaiL;
 

@@ -27,7 +27,7 @@ void nuskaitytiFailaT(string fail, Container &studentuSarasas){
             while(getline(buferis, eilut)){
                 istringstream eilute(eilut);
                 string vardas, pavarde;
-                vector<int> pazymiai;
+                Vector<int> pazymiai;
                 int egzaminas;
 
                 eilute >> vardas >> pavarde;
@@ -70,7 +70,7 @@ void rikiuotiPagalVardaT(Container &studentuSarasas){
             return a.vardas() < b.vardas();
         });
     } else {
-        sort(studentuSarasas.begin(), studentuSarasas.end(), [](const Studentas& a, const Studentas& b) {
+        std::sort(studentuSarasas.begin(), studentuSarasas.end(), [](const Studentas& a, const Studentas& b) {
             return a.vardas() < b.vardas();
         });
 
@@ -84,7 +84,7 @@ void rikiuotiPagalPavardeT(Container &studentuSarasas){
             return a.pavarde() < b.pavarde();
         });
     } else {
-        sort(studentuSarasas.begin(), studentuSarasas.end(), [](const Studentas& a, const Studentas& b) {
+        std::sort(studentuSarasas.begin(), studentuSarasas.end(), [](const Studentas& a, const Studentas& b) {
             return a.pavarde() < b.pavarde();
         });
 
@@ -98,7 +98,7 @@ void rikiuotiPagalGalutiniMedT(Container &studentuSarasas){
             return a.galutinisMed() < b.galutinisMed();
         });
     } else {
-        sort(studentuSarasas.begin(), studentuSarasas.end(), [](const Studentas& a, const Studentas& b) {
+        std::sort(studentuSarasas.begin(), studentuSarasas.end(), [](const Studentas& a, const Studentas& b) {
             return a.galutinisMed() < b.galutinisMed();
         });
 
@@ -112,7 +112,7 @@ void rikiuotiPagalGalutiniVidT(Container &studentuSarasas){
             return a.galutinisVid() > b.galutinisVid();
         });
     } else {
-        sort(studentuSarasas.begin(), studentuSarasas.end(), [](const Studentas& a, const Studentas& b) {
+        std::sort(studentuSarasas.begin(), studentuSarasas.end(), [](const Studentas& a, const Studentas& b) {
             return a.galutinisVid() > b.galutinisVid();
         });
 
@@ -131,7 +131,7 @@ void skirstytiStudentusSuTaisPaciaisKonteineriaisT(Container &studentuSarasas){
         }
     }
 
-    if constexpr(std::is_same_v<Container, vector<Studentas>> || std::is_same_v<Container, deque<Studentas>>){
+    if constexpr(std::is_same_v<Container, Vector<Studentas>> || std::is_same_v<Container, deque<Studentas>>){
         nepazangus.shrink_to_fit();
         pazangus.shrink_to_fit();
     }
@@ -146,7 +146,7 @@ void skirstytiStudentusSuVienuKonteineriuT(Container &studentuSarasas, int rikia
         studentuSarasas.pop_back();
     }
 
-    if constexpr(std::is_same_v<Container, vector<Studentas>> || std::is_same_v<Container, deque<Studentas>>){
+    if constexpr(std::is_same_v<Container, Vector<Studentas>> || std::is_same_v<Container, deque<Studentas>>){
         studentuSarasas.shrink_to_fit();
         nepazangus.shrink_to_fit();
     }
@@ -180,7 +180,7 @@ void skirstytiStudentusT(Container &studentuSarasas){
         }
     }
 
-    if constexpr(std::is_same_v<Container, vector<Studentas>> || std::is_same_v<Container, deque<Studentas>>){
+    if constexpr(std::is_same_v<Container, Vector<Studentas>> || std::is_same_v<Container, deque<Studentas>>){
         nepazangus.shrink_to_fit();
         pazangus.shrink_to_fit();
     }
