@@ -1,103 +1,72 @@
 #include <iostream>
 
 template <typename T, typename Allocator = std::allocator<T>>
-
 class Vector{
 private:
-  size_t size;    
-  size_t capacity;    
-  T* data;
+  size_t size_;    
+  size_t capacity_;    
+  T* data_;
 
 public:
     using value_type = T;
+    using pointer = T*;
+    using iterator = pointer;
     using allocator_type = Allocator;
     using size_type = std::size_t;
     using difference_type = std::ptrdiff_t;
     using reference = value_type&;
     using const_reference = const value_type&;
-    using const_pointer = Allocator::const_pointer;
-    using iterator = pointer;
+    using const_pointer = typename Allocator::const_pointer;
     using const_iterator = const_pointer;
-    using reverse_iterator = std::reverse_iterator<iterator>
-    using const_reverse_iterator = std::reverse_iterator<const_iterator>
+    using reverse_iterator = std::reverse_iterator<iterator>;
 
 //member functions
 //constructors
-    Vector() : size(0), capacity(1) { data = new T[capacity]};
+    Vector() : size_(0), capacity_(1) { data_ = new T[capacity_];}
 
     Vector(T array[], int n){
-        data = new T[n]; //reserves the same space as the array passed
+        data_ = new T[n]; //reserves the same space as the array passed
         for(int i = 0; i < n; i++){
-            data[i] = array[i];
+            data_[i] = array[i];
         }
-        size = n;
+        size_ = n;
     }
 
-    Vector(const Vector& other): size(other.size), capacity(other.capacity){
-        data = new T[capacity];
-        for(size_t i=0; i<size; i++) {
-            data[i] = other.data[i];
+    Vector(const Vector& other): size_(other.size_), capacity_(other.capacity_){
+        data_ = new T[capacity_];
+        for(size_t i=0; i<size_; i++) {
+            data_[i] = other.data_[i];
         }
     }
 
     Vector& operator=(const Vector& other){
         if(this == &other) return *this;
 
-        size = other.size;
-        capacity = other.capacity;
-        data = new T[capacity];
-        for(size_t i = 0; i < size; ++i) {
-            data[i] = other.data[i];
+        size_ = other.size_;
+        capacity_ = other.capacity_;
+        data_ = new T[capacity_];
+        for(size_t i = 0; i < size_; ++i) {
+            data_[i] = other.data_[i];
         }
 
         return *this;
     }
 
-    Vector(Vector&& other) noexcept : data(other.data), size(other.size), 
-    capacity(other.capacity) {
+    Vector(Vector&& other) noexcept : data_(other.data_), size_(other.size_), 
+    capacity_(other.capacity_) {
         other.clear();
     }
 
     Vector& operator=(Vector&& other){
         if(this == &other) return *this;
-        delete[] data;
-        data = other.data;
-        size = other.size;
-        capacity = other.capacity;
+        delete[] data_;
+        data_ = other.data_;
+        size_ = other.size_;
+        capacity_ = other.capacity_;
 
         other.clear();
 
         return *this;
-    }
-
-    void clear(){
-        size = 0;
-        capacity = 0;
-        delete[] data;
-    }
-
-    void resize(){
-        capacity *= 2;
-        T* new_data = new T[capacity];
-        for(size_t i=0; i<size; i++){
-            new_data[i] = data[i];
-        }
-        delete[] data;
-        data = new_data;
-    }
-
-    void push_back(const T& item){
-        if(size == capacity) {
-            resize();
-        }
-        data[size] = item;
-        ++size;
-    }
-
-    void pop_back(){
-        if(size > 0){
-            --size;
-        }
     }
     
     ~Vector(){
@@ -106,17 +75,17 @@ public:
 
     //element access
     T& at(int pos){
-        if(pos >= size){
+        if(pos >= size_){
             throw std::out_of_range("Index out of bounds");
         }
-        return data[pos];
+        return data_[pos];
     }
 
     T& operator[](size_t index){
-        if (index >= size){
+        if (index >= size_){
             throw std::out_of_range("Index out of bounds");
         }
-        return data[index];
+        return data_[index];
     }
 
     T& front(){
@@ -124,7 +93,7 @@ public:
     }
 
     T& back(){
-        return at(size-1);
+        return at(size_-1);
     }
 
     const T& front() const{
@@ -132,60 +101,142 @@ public:
     }
 
     const T& back() const{
-        return at(size-1);
+        return at(size_-1);
     }
 
     T* data(){
-        return data;
+        return data_;
     }
 
     const T* data() const {
-        return data;
+        return data_;
     }
 
 //iterators
     T* begin(){
-        return data;
+        return data_;
     }
 
     const T* begin() const {
-        return data;
+        return data_;
     }
 
     T* end(){
-        return data + size;
+        return data_ + size_;
     }
 
     const T* end() const{
-        return data + size;
+        return data_ + size_;
     }
 
 //capacity
     bool empty(){
-        return size == 0;
+        return size_ == 0;
     }
 
-    size_type size() const{ return size; }
+    size_type size() const{ return size_; }
 
     size_type max_size() const{
         return std::numeric_limits<size_type>::max() / sizeof(T);
     }
 
     void reserve(size_type new_cap ){
-        if (new_cap > capacity){
-            capacity = new_cap;
+        if (new_cap > capacity_){
+            capacity_ = new_cap;
         }
     }
 
-    size_type capacity() const{return capacity; }
+    size_type capacity() const{return capacity_; }
 
     void shrink_to_fit(){
-        capacity = size;
+        capacity_ = size_;
     }
 
 //modifiers
+    void clear(){
+        size_ = 0;
+        capacity_ = 0;
+        delete[] data_;
+    }
 
+    void insert(int pos, const T& value){
+        if(pos < begin() || pos > end()){
+            throw std::out_of_range("Invalid position");
+        }
+        if(size_ == capacity_){
+            resize_();
+        } 
+        for(size_t i = size_-1; i > pos; --i){
+            data_[i]=data_[i-1];
+        }
+        data_[pos]=value;
+        ++size_;
+    }
 
+   void erase(const_iterator pos) {
+        if(pos < begin() || pos >= end()) {
+            throw std::out_of_range("Invalid position");
+        }
+    
+        size_t index = std::distance(begin(), pos);
+    
+        for(size_t i = index; i < size_ - 1; i++) {
+            data_[i] = data_[i+1];
+        }
+    --size_;
+    }   
+    
+    void erase(const_iterator first, const_iterator last ){
+        size_t pos_first = std::distance(begin(), first);
+        size_t pos_last = std::distance(begin(), last);
+        size_t count = pos_last - pos_first;
+    
+        if (count == 0) {
+            return begin() + pos_first;
+        }
+        
+        for (size_t i = pos_first; i + count < size_; ++i) {
+            data_[i] = data_[i + count];
+        }
+    
+        size_ -= count;
+    
+        return begin() + pos_first;
+    }
+
+    void insert_range();//todo
+    
+    void push_back(const T& item){
+        if(size_ == capacity_) {
+            resize_();
+        }
+        data_[size_] = item;
+        ++size_;
+    }
+
+    void append_range();//todo
+
+    void pop_back(){
+        if(size_ > 0){
+            --size_;
+        }
+    }
+
+    void resize_(){
+        capacity_ *= 2;
+        T* new_data = new T[capacity_];
+        for(size_t i=0; i<size_; i++){
+            new_data[i] = data_[i];
+        }
+        delete[] data_;
+        data_ = new_data;
+    }
+
+    void swap(Vector& other){
+        std::swap(size_, other.size_);
+        std::swap(capacity_, other.capacity_);
+        std::swap(data_, other.data_);
+    }
 };
 
 //non-member functions
