@@ -159,21 +159,25 @@ public:
         delete[] data_;
     }
 
-    void insert(int pos, const T& value){
-        if(pos < begin() || pos > end()){
+    iterator insert(iterator pos, const T& value){
+        size_t index = pos - begin();
+
+        if(index > size_){
             throw std::out_of_range("Invalid position");
         }
         if(size_ == capacity_){
             resize_();
         } 
-        for(size_t i = size_-1; i > pos; --i){
+        for(size_t i = size_-1; i > index; --i){
             data_[i]=data_[i-1];
         }
-        data_[pos]=value;
+        data_[index]=value;
         ++size_;
+
+        return begin() + index; 
     }
 
-   void erase(const_iterator pos) {
+   iterator erase(const_iterator pos) {
         if(pos < begin() || pos >= end()) {
             throw std::out_of_range("Invalid position");
         }
@@ -184,9 +188,11 @@ public:
             data_[i] = data_[i+1];
         }
     --size_;
+
+    return begin() + index;
     }   
     
-    void erase(const_iterator first, const_iterator last ){
+    iterator erase(const_iterator first, const_iterator last ){
         size_t pos_first = std::distance(begin(), first);
         size_t pos_last = std::distance(begin(), last);
         size_t count = pos_last - pos_first;
@@ -241,10 +247,31 @@ public:
 
 //non-member functions
 template <typename T>
-bool operator==(const Vector<T>& lhs, const Vector<T>& rhs ){}
+bool operator==(const Vector<T>& lhs, const Vector<T>& rhs ){
+    if(lhs.size() != rhs.size()){
+        return false;
+    }
+
+    for(size_t i = 0; i < lhs.size(); ++i) {
+        if(lhs.at(i) != rhs.at(i)){
+            return false;
+        }
+    }
+
+    return true;
+}
+
 template <typename T>
-bool operator!=(const Vector<T>& lhs, const Vector<T>& rhs ){}
-template <typename T>
-bool operator>(const Vector<T>& lhs, const Vector<T>& rhs ){}
-template <typename T>
-bool operator<(const Vector<T>& lhs, const Vector<T>& rhs ){}
+bool operator!=(const Vector<T>& lhs, const Vector<T>& rhs ){
+    if(lhs.size() != rhs.size()){
+        return true;
+    }
+
+    for(size_t i = 0; i < lhs.size(); ++i) {
+        if(lhs.at(i) != rhs.at(i)){
+            return true;
+        }
+    }
+
+    return false;
+}
