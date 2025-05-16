@@ -171,7 +171,13 @@ public:
     }
 
     void reserve(size_type new_cap ){
-        if (new_cap > capacity_){
+        if (new_cap > capacity_) {
+            T* new_data = new T[new_cap];
+            for (size_type i = 0; i < size_; ++i) {
+                new_data[i] = std::move(data_[i]);
+            }
+            delete[] data_;
+            data_ = new_data;
             capacity_ = new_cap;
         }
     }
@@ -179,7 +185,16 @@ public:
     size_type capacity() const{return capacity_; }
 
     void shrink_to_fit(){
-        capacity_ = size_;
+        if (capacity_ > size_) {
+            T* new_data = new T[size_];
+            for (size_type i = 0; i < size_; ++i) {
+                new_data[i] = std::move(data_[i]);
+            }
+            delete[] data_;
+            data_ = new_data;
+            capacity_ = size_;
+        }
+
     }
 
 //modifiers

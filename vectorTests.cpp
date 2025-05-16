@@ -130,5 +130,46 @@ TEST_CASE("Element access", "[vector]"){
 
 
 TEST_CASE("Capacity", "[Vector]"){
-    
+    Vector<int> v;
+
+    SECTION("empty()") {
+        REQUIRE(v.empty());
+        REQUIRE(v.size() == 0);
+    }
+
+    SECTION("size() and capacity()") {
+        v.push_back(1);
+        v.push_back(2);
+
+        REQUIRE_FALSE(v.empty());
+        REQUIRE(v.size() == 2);
+        REQUIRE(v.capacity() >= 2);  
+    }
+
+    SECTION("max_size()") {
+        REQUIRE(v.max_size() > 100000);  
+    }
+
+    SECTION("reserve()") {
+        size_t oldCap = v.capacity();
+        v.reserve(oldCap + 10);
+        REQUIRE(v.capacity() == oldCap + 10);
+    }
+
+    SECTION("reserve()") {
+        v.reserve(100);
+        size_t cap = v.capacity();
+        v.reserve(50);  
+        REQUIRE(v.capacity() == cap);
+    }
+
+    SECTION("shrink_to_fit()") {
+        for (int i = 0; i < 5; ++i) {
+            v.push_back(i);
+        }
+        v.reserve(100);
+        REQUIRE(v.capacity() >= 100);
+        v.shrink_to_fit();
+        REQUIRE(v.capacity() == v.size());
+    }
 }
