@@ -194,7 +194,6 @@ public:
             data_ = new_data;
             capacity_ = size_;
         }
-
     }
 
 //modifiers
@@ -212,7 +211,7 @@ public:
             throw std::out_of_range("Invalid position");
         }
         if(size_ == capacity_){
-            resize_();
+            resize();
         } 
         for(size_t i = size_-1; i > index; --i){
             data_[i]=data_[i-1];
@@ -255,18 +254,18 @@ public:
     
         return begin() + pos_first;
     }
-
-    void insert_range();//todo
     
     void push_back(const T& item){
         if(size_ == capacity_) {
-            resize_();
+            resize();
         }
         data_[size_] = item;
         ++size_;
     }
 
-    void append_range();//todo
+    void append_range(){
+        
+    }
 
     void pop_back(){
         if(size_ > 0){
@@ -274,8 +273,18 @@ public:
         }
     }
 
-    void resize_(){
+    void resize(){
         capacity_ *= 2;
+        T* new_data = new T[capacity_];
+        for(size_t i=0; i<size_; i++){
+            new_data[i] = data_[i];
+        }
+        delete[] data_;
+        data_ = new_data;
+    }
+
+    void resize(size_t capacity){
+        capacity_ = capacity;
         T* new_data = new T[capacity_];
         for(size_t i=0; i<size_; i++){
             new_data[i] = data_[i];

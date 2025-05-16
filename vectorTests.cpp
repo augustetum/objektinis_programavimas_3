@@ -2,7 +2,7 @@
 #include <catch2/catch_all.hpp>
 #include "vector.h"
 
-TEST_CASE("Vector constructors & Rule of Five", "[vector]") {
+TEST_CASE("Vector constructors & Rule of Five", "[Vector]") {
     SECTION("Default constructor") {
         Vector<int> v;
         REQUIRE(v.size() == 0);
@@ -10,7 +10,7 @@ TEST_CASE("Vector constructors & Rule of Five", "[vector]") {
         REQUIRE(v.empty());
     }
 
-     SECTION("List constructor") {
+     SECTION("List constructor", "[Vector]") {
         Vector<int> v = {6, 7, 8, 10, 8};
         int arr[] = {6, 7, 8, 10, 8};
         REQUIRE(v.size() == 5);
@@ -173,3 +173,108 @@ TEST_CASE("Capacity", "[Vector]"){
         REQUIRE(v.capacity() == v.size());
     }
 }
+
+TEST_CASE("Modifiers", "[Vector]"){
+    SECTION("clear()"){
+        Vector<int> v;
+        v.push_back(1);
+        v.push_back(2);
+        v.clear();
+
+        REQUIRE(v.size() == 0);
+        REQUIRE(v.capacity() == 0);
+    }
+
+    SECTION("insert()"){
+        Vector<int> v;
+        v.push_back(1);
+        v.push_back(3);
+
+        auto it = v.insert(v.begin() + 1, 2);  
+
+        REQUIRE(v.size() == 3);
+        REQUIRE(v.at(0) == 1);
+        REQUIRE(v.at(1) == 2);
+        REQUIRE(v.at(2) == 3);
+        REQUIRE(*it == 2);
+
+        Vector<int> v2;
+        REQUIRE_THROWS_AS(v.insert(v2.begin() + 1, 10), std::out_of_range);
+    }
+
+    SECTION("erase() (single element)", "[Vector]"){
+         Vector<int> v;
+        v.push_back(1);
+        v.push_back(2);
+        v.push_back(3);
+
+        auto it = v.erase(v.begin() + 1); 
+
+        REQUIRE(v.size() == 2);
+        REQUIRE(v.at(0) == 1);
+        REQUIRE(v.at(1) == 3);
+        REQUIRE(*it == 3);
+    }
+
+    SECTION("erase() (range)", "[Vector]"){
+        Vector<int> v;
+        for (int i = 1; i <= 5; ++i){
+            v.push_back(i);
+        }
+
+        auto it = v.erase(v.begin() + 1, v.begin() + 4); 
+
+        REQUIRE(v.size() == 2);
+        REQUIRE(v.at(0) == 1);
+        REQUIRE(v.at(1) == 5);
+        REQUIRE(*it == 5);
+    }
+
+    SECTION("push_back()", "[Vector]"){
+        Vector<int> v;
+        v.push_back(42);
+
+        REQUIRE(v.size() == 1);
+        REQUIRE(v.at(0) == 42);
+    }
+
+     SECTION("pop_back()", "[Vector]"){
+        Vector<int> v;
+        v.push_back(10);
+        v.push_back(20);
+        v.pop_back();
+
+        REQUIRE(v.size() == 1);
+        REQUIRE(v.at(0) == 10);
+    }
+
+    SECTION("resize()", "[Vector]"){
+        Vector<int> v;
+        v.reserve(2);
+        v.push_back(1);
+        v.push_back(2);
+        v.push_back(3); 
+
+        REQUIRE(v.size() == 3);
+        REQUIRE(v.at(0) == 1);
+        REQUIRE(v.at(1) == 2);
+        REQUIRE(v.at(2) == 3);
+        REQUIRE(v.capacity() >= 3);
+    }
+
+    SECTION("swap()", "[Vector]"){
+        Vector<int> a, b;
+        a.push_back(1);
+        a.push_back(2);
+        b.push_back(10);
+
+        a.swap(b);
+
+        REQUIRE(a.size() == 1);
+        REQUIRE(a.at(0) == 10);
+        REQUIRE(b.size() == 2);
+        REQUIRE(b.at(0) == 1);
+        REQUIRE(b.at(1) == 2);
+    }
+}
+
