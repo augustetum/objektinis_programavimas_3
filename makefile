@@ -1,6 +1,5 @@
 CXX = g++ #kompiliatorius
 CXXFLAGS = -std=c++17 -I$(CATCH_PATH) #kompiliatoriaus veliaveles
-CATCH_PATH = /opt/homebrew/Cellar/catch2/3.8.1/include
 
 EXEC0 = konteineriuTyrimas
 EXEC1 = 1strategija
@@ -28,10 +27,10 @@ $(EXEC4): programaFunkcijos.o programa.o
 	$(CXX) $(CXXFLAGS) -o $(EXEC4) programaFunkcijos.o programa.o
 
 $(TEST_EXEC): catchTests.o programaFunkcijos.o 
-	$(CXX) $(CXXFLAGS) -o $(TEST_EXEC) catchTests.o programaFunkcijos.o -L/opt/homebrew/Cellar/catch2/3.8.1/lib -lCatch2Main -lCatch2
+	$(CXX) $(CXXFLAGS) -o $(TEST_EXEC) catchTests.o programaFunkcijos.o 
 
 $(TEST_VECT): vectorUnitTests.o 
-	$(CXX) $(CXXFLAGS) -o $(TEST_VECT) vectorUnitTests.o -L/opt/homebrew/Cellar/catch2/3.8.1/lib -lCatch2Main -lCatch2
+	$(CXX) $(CXXFLAGS) -o $(TEST_VECT) vectorUnitTests.o 
 
 konteineriuTyrimas.o: 1_strategija/konteineriuTyrimas.cpp
 	$(CXX) $(CXXFLAGS) -c 1_strategija/konteineriuTyrimas.cpp -o konteineriuTyrimas.o

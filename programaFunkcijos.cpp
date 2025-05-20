@@ -177,10 +177,14 @@ string pasirinktiFaila(){
 
     while(true){
         try{
-            system("ls *.txt gen_failu_archyvas/*.txt > temp.txt");
+            #ifdef _WIN32
+            system("dir /b *.txt > temp.txt");
+            #else
+            system("ls *.txt > temp.txt");
+            #endif
             ifstream tempFail("temp.txt");
             Vector<string> failuPav;
-            std::unordered_set<string> nenorimiFailai = {"studentuRezultatai.txt", "firstNames.txt", "lastNames.txt", "nepazangus.txt", "pazangus.txt"};
+            std::unordered_set<string> nenorimiFailai = {"studentuRezultatai.txt", "firstNames.txt", "lastNames.txt", "nepazangus.txt", "pazangus.txt", "temp.txt"};
             string failoPav;
             while(getline(tempFail, failoPav)){
                 if (nenorimiFailai.find(failoPav) == nenorimiFailai.end()) {
@@ -188,7 +192,7 @@ string pasirinktiFaila(){
                 }
             }
             tempFail.close();
-            system("rm temp.txt");
+            remove("temp.txt");
             string fail;
 
             cout << "Pasirinkite norimą failą" << endl;

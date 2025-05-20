@@ -2,7 +2,7 @@
 #include "strategijos_bibl.h"
 
 
-int main(){
+void strategija3(){
     cout << "Konteinerių testavimo programa | 3 strategija" << endl;
     cout << "---------------------------------------------" << endl;
     Vector<Studentas> studentaiV;
@@ -23,9 +23,9 @@ int main(){
     cout << "Kiek kartų norite testuoti programą su skirtingais konteineriais?" << endl;
     cin >> kartai;
 
-    double vektoriuTrukme;
-    double dequeTrukme;
-    double listTrukme;
+    double vektoriuTrukme = 0;
+    double dequeTrukme = 0;
+    double listTrukme = 0;
     Timer v;
     Timer d;
     Timer l;
@@ -36,19 +36,16 @@ int main(){
         nuskaitytiFailaT(failas, studentaiV);
         studentuSkirstymas3(studentaiV, rikiavimas);
         vektoriuTrukme += v.elapsed();
-        studentaiV.clear();
 
         d.reset();
         nuskaitytiFailaT(failas, studentaiD);
         studentuSkirstymas3(studentaiD, rikiavimas);
         dequeTrukme += d.elapsed();
-        studentaiD.clear();
 
         l.reset();
         nuskaitytiFailaT(failas, studentaiL);
         studentuSkirstymas3(studentaiL, rikiavimas);
         listTrukme += l.elapsed();
-        studentaiL.clear();
     }
     cout << "----------------------------Rezultatai------------------------------" << endl;
     cout << "Programa su vektoriais (vector) vidutiniškai užtruko: " << vektoriuTrukme / (double)kartai << "s\n";

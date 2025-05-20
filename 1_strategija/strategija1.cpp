@@ -2,7 +2,7 @@
 #include "strategijos_bibl.h"
 
 
-int main(){
+void strategija1(){
     cout << "Konteinerių testavimo programa | 1 strategija" << endl;
     cout << "---------------------------------------------" << endl;
     Vector<Studentas> studentaiV;
@@ -23,9 +23,9 @@ int main(){
     cout << "Kiek kartų norite testuoti programą su skirtingais konteineriais?" << endl;
     cin >> kartai;
 
-    double vektoriuTrukme;
-    double dequeTrukme;
-    double listTrukme;
+    double vektoriuTrukme = 0;
+    double dequeTrukme = 0;
+    double listTrukme = 0;
     Timer v;
     Timer d;
     Timer l;

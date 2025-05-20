@@ -114,6 +114,30 @@ public:
         size_ = count;
     }
 
+template <typename InputIt>
+void assign(InputIt first, InputIt last) {
+    size_type count = std::distance(first, last);
+    clear();
+    
+    if (count > capacity_) {
+        if (data_ != nullptr) {
+            delete[] data_;
+        }
+        capacity_ = count;
+        data_ = new T[capacity_];
+    } else if (data_ == nullptr) {
+        capacity_ = count > 0 ? count : 1; 
+        data_ = new T[capacity_];
+    }
+    
+    size_ = 0; 
+    for (; first != last; ++first) {
+        if (size_ < capacity_) {
+            data_[size_++] = *first;
+        }
+    }
+}
+
     //element access
     T& at(int pos){
         if(pos >= size_){
@@ -302,15 +326,36 @@ public:
         data_ = new_data;
     }
 
-    void resize(size_t capacity){
-        capacity_ = capacity;
-        T* new_data = new T[capacity_];
-        for(size_t i=0; i<size_; i++){
+    void resize(size_t newSize) {
+    
+    if (newSize > capacity_) {
+   
+        size_t newCapacity = std::max(newSize, capacity_ * 2);
+        
+  
+        T* new_data = new T[newCapacity];
+        
+      
+        for (size_t i = 0; i < size_; i++) {
             new_data[i] = data_[i];
         }
+        
+        for (size_t i = size_; i < newSize; i++) {
+            new_data[i] = T(); 
+        }
+        
         delete[] data_;
         data_ = new_data;
+        capacity_ = newCapacity;
     }
+   
+    else if (newSize > size_) {
+        for (size_t i = size_; i < newSize; i++) {
+            data_[i] = T(); 
+        }
+    }
+    size_ = newSize;
+}
 
     void swap(Vector& other){
         std::swap(size_, other.size_);

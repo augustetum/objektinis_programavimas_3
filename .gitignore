@@ -27,7 +27,6 @@
 *.lib
 
 # Executables
-*.exe
 *.out
 *.app
 
@@ -37,3 +36,5 @@ nepazangus.txt
 pazangus.txt
 studentuRezultatai.txt
 gen_failu_archyvas
+main.exe.manifest
+.vscode

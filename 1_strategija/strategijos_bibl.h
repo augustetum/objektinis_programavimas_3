@@ -194,8 +194,6 @@ void studentuSkirstymas3(Container &studentuSarasas, int rikiavimas){
     nepazangus.assign(it, studentuSarasas.end());
     studentuSarasas.resize(std::distance(studentuSarasas.begin(), it));
 
-    std::thread t1, t2;
-
     if (rikiavimas == 1) {
         std::thread t1([&studentuSarasas]() { rikiuotiPagalVardaT(studentuSarasas); });
         std::thread t2([&nepazangus]() { rikiuotiPagalVardaT(nepazangus); });
@@ -217,9 +215,6 @@ void studentuSkirstymas3(Container &studentuSarasas, int rikiavimas){
         t1.join();
         t2.join();
     } 
-    
-    if (t1.joinable()) t1.join();
-    if (t2.joinable()) t2.join();
 }
 #endif
 
