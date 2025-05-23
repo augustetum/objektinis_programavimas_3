@@ -96,47 +96,37 @@ public:
        clear();
     }
 
-    void assign(size_type count, const T& value) {
+     void assign(size_type count, const T& value) {
+    clear();
+    if (count > capacity_) {
+        delete[] data_;
+        capacity_ = count;
+        data_ = new T[capacity_];
+    }
+    
+    for (size_type i = 0; i < count; ++i) {
+        data_[i] = value;
+    }
+    size_ = count;
+    }
+
+    template <typename InputIt>
+    typename std::enable_if<!std::is_integral<InputIt>::value>::type
+    assign(InputIt first, InputIt last) {
+        size_type count = std::distance(first, last);
         clear();
+        
         if (count > capacity_) {
             delete[] data_;
             capacity_ = count;
             data_ = new T[capacity_];
-        } else {
-            if (data_ == nullptr) {
-                data_ = new T[capacity_];
-            }
         }
         
-        for (size_type i = 0; i < count; ++i) {
-            data_[i] = value;
-        }
-        size_ = count;
-    }
-
-template <typename InputIt>
-void assign(InputIt first, InputIt last) {
-    size_type count = std::distance(first, last);
-    clear();
-    
-    if (count > capacity_) {
-        if (data_ != nullptr) {
-            delete[] data_;
-        }
-        capacity_ = count;
-        data_ = new T[capacity_];
-    } else if (data_ == nullptr) {
-        capacity_ = count > 0 ? count : 1; 
-        data_ = new T[capacity_];
-    }
-    
-    size_ = 0; 
-    for (; first != last; ++first) {
-        if (size_ < capacity_) {
+        size_ = 0;
+        for (; first != last; ++first) {
             data_[size_++] = *first;
         }
     }
-}
 
     //element access
     T& at(int pos){
